@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'markdown_to_textile/version'
+require 'mark_left/version'
 require 'markdown/to_textile'
 
-module MarkdownToTextile
+module MarkLeft
   def self.convert(markdown, **options)
     Markdown::ToTextile.new(**options).convert(markdown)
   end

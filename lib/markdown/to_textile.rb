@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'markdown/to_textile/convert_header'
-require 'markdown/to_textile/convert_bold'
-require 'markdown/to_textile/convert_unordered_list'
-require 'markdown/to_textile/convert_ordered_list'
+require 'markdown/to_textile/header'
+require 'markdown/to_textile/bold'
+require 'markdown/to_textile/unordered_list'
+require 'markdown/to_textile/ordered_list'
 
 module Markdown
   class ToTextile
@@ -18,10 +18,10 @@ module Markdown
     private
 
     def convert_line(line)
-      line = ConvertHeader.call(line, header_level: @header_level)
-      line = ConvertBold.call(line)
-      line = ConvertUnorderedList.call(line)
-      ConvertOrderedList.call(line)
+      line = Header.execute(line, header_level: @header_level)
+      line = Bold.execute(line)
+      line = UnorderedList.execute(line)
+      OrderedList.execute(line)
     end
   end
 end

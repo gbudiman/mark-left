@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/markdown_to_textile/version'
+require_relative 'lib/mark_left/version'
 
 Gem::Specification.new do |spec|
-  spec.name    = 'markdown-to-textile'
-  spec.version = MarkdownToTextile::VERSION
+  spec.name    = 'mark-left'
+  spec.version = MarkLeft::VERSION
   spec.summary = 'Convert between Markdown and Textile'
   spec.authors = ['Gloria Budiman']
 

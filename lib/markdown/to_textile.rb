@@ -13,17 +13,25 @@ module Markdown
       def initialize(value)
         super("list_depth must be a positive integer, got: #{value.inspect}")
       end
+
+      def self.validate!(value)
+        raise self, value unless value.is_a?(Integer) && value.positive?
+      end
     end
 
     class InvalidHeaderLevelError < ArgumentError
       def initialize(value)
         super("header_level must be one of #{VALID_HEADER_LEVELS.join(', ')}, got: #{value.inspect}")
       end
+
+      def self.validate!(value)
+        raise self, value unless VALID_HEADER_LEVELS.include?(value)
+      end
     end
 
     def initialize(header_level: 'h3', list_depth: 3)
-      raise InvalidHeaderLevelError, header_level if invalid_header_level?(header_level)
-      raise InvalidListDepthError, list_depth if invalid_list_depth?(list_depth)
+      InvalidHeaderLevelError.validate!(header_level)
+      InvalidListDepthError.validate!(list_depth)
 
       @header_level = header_level
       @list_depth = list_depth
@@ -36,14 +44,6 @@ module Markdown
     end
 
     private
-
-    def invalid_header_level?(header_level)
-      !VALID_HEADER_LEVELS.include?(header_level)
-    end
-
-    def invalid_list_depth?(list_depth)
-      !list_depth.is_a?(Integer) || !list_depth.positive?
-    end
 
     def convert_line(line)
       line = Header.execute(line, header_level: @header_level)

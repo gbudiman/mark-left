@@ -13,11 +13,21 @@ module MarkLeft
   #
   #   MarkLeft.convert(markdown, list_depth: 1)
   class Configuration
-    attr_accessor :header_level, :list_depth
+    attr_reader :header_level, :list_depth
 
     def initialize
       @header_level = 'h3'
       @list_depth = 3
+    end
+
+    def header_level=(value)
+      Markdown::ToTextile::InvalidHeaderLevelError.validate!(value)
+      @header_level = value
+    end
+
+    def list_depth=(value)
+      Markdown::ToTextile::InvalidListDepthError.validate!(value)
+      @list_depth = value
     end
   end
 end

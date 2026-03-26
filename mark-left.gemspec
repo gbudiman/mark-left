@@ -10,8 +10,10 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.6'
 
+  spec.license = 'MIT'
+
   spec.require_paths = ['lib']
-  spec.files = Dir['lib/**/*.rb']
+  spec.files = Dir['lib/**/*.rb'] + ['LICENSE']
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 end

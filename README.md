@@ -48,7 +48,7 @@ MdxTex.to_textile(markdown: '- item', list_depth: 2)
 
 ### String Extension
 
-Adds `to_textile` directly on `String`. Disabled by default.
+Adds `to_textile` directly to `String`. Off by default.
 
 **Any Ruby app:**
 
@@ -79,24 +79,25 @@ MdxTex.configure do |config|
 end
 ```
 
-The Railtie picks this up automatically after initialization.
+The Railtie loads this automatically after initialization.
 
 ## Supported Syntaxes
 
 ### Headers
 
-`#` through `######` become Textile headings. `header_level` sets the base level (default: `h3`).
+Converts all Markdown headings (`#` through `######`) to the same Textile heading tag. The number of `#` doesn't matter. `header_level` controls which tag to use (default: `h3`).
 
 | Markdown | header_level | Textile |
 |----------|--------------|---------|
+| `# Title` | `h3` (default) | `h3. Title` |
+| `## Title` | `h3` (default) | `h3. Title` |
+| `###### Title` | `h3` (default) | `h3. Title` |
 | `# Title` | `h1` | `h1. Title` |
-| `## Title` | `h2` | `h2. Title` |
-| `### Title` | `h3` | `h3. Title` |
-| `#### Title` | `h4` | `h4. Title` |
-| `##### Title` | `h5` | `h5. Title` |
-| `###### Title` | `h6` | `h6. Title` |
+| `### Title` | `h1` | `h1. Title` |
 
 Requires a space after `#`. `#NoSpace` won't convert.
+
+This does not preserve heading hierarchy yet (`##` and `###` both produce the same tag). We plan to fix this in a future version.
 
 ### Bold
 
@@ -122,7 +123,7 @@ Requires a space after `#`. `#NoSpace` won't convert.
 
 ### Ordered Lists
 
-`1. item` becomes `# item`. The actual number is ignored. Nesting uses 2-space indentation.
+`1. item` becomes `# item`. Ignores the actual number. Nesting uses 2-space indentation.
 
 | Markdown | Textile |
 |----------|---------|
@@ -130,6 +131,21 @@ Requires a space after `#`. `#NoSpace` won't convert.
 | `99. Any number` | `# Any number` |
 | `  1. Nested` | `## Nested` |
 | `    1. Deep` | `### Deep` |
+
+### Not Supported
+
+The following Markdown syntax passes through as-is (no conversion):
+
+- Italic (`*text*`, `_text_`)
+- Strikethrough (`~~text~~`)
+- Links (`[text](url)`)
+- Images (`![alt](url)`)
+- Inline code (`` `code` ``)
+- Code blocks (`` ``` ``)
+- Blockquotes (`>`)
+- Tables
+- Horizontal rules (`---`)
+- Task lists (`- [ ]`, `- [x]`)
 
 ## Configuration
 

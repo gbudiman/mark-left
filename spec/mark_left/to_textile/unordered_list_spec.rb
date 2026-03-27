@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Markdown::ToTextile::UnorderedList do
+RSpec.describe MarkLeft::ToTextile::UnorderedList do
   it 'uses triple asterisks by default for a depth-1 item' do
     expect(described_class.execute('- item')).to eq('*** item')
   end

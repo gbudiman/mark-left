@@ -66,19 +66,19 @@ RSpec.describe MarkLeft do
     end
 
     it 'raises InvalidHeaderLevelError for an invalid header_level' do
-      expect { config.header_level = 'h7' }.to raise_error(Markdown::ToTextile::InvalidHeaderLevelError)
+      expect { config.header_level = 'h7' }.to raise_error(MarkLeft::ToTextile::InvalidHeaderLevelError)
     end
 
     it 'raises InvalidHeaderLevelError for a non-string header_level' do
-      expect { config.header_level = 3 }.to raise_error(Markdown::ToTextile::InvalidHeaderLevelError)
+      expect { config.header_level = 3 }.to raise_error(MarkLeft::ToTextile::InvalidHeaderLevelError)
     end
 
     it 'raises InvalidListDepthError for zero list_depth' do
-      expect { config.list_depth = 0 }.to raise_error(Markdown::ToTextile::InvalidListDepthError)
+      expect { config.list_depth = 0 }.to raise_error(MarkLeft::ToTextile::InvalidListDepthError)
     end
 
     it 'raises InvalidListDepthError for a non-integer list_depth' do
-      expect { config.list_depth = 'x' }.to raise_error(Markdown::ToTextile::InvalidListDepthError)
+      expect { config.list_depth = 'x' }.to raise_error(MarkLeft::ToTextile::InvalidListDepthError)
     end
   end
 end

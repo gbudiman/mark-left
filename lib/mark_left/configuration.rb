@@ -21,12 +21,12 @@ module MarkLeft
     end
 
     def header_level=(value)
-      Markdown::ToTextile::InvalidHeaderLevelError.validate!(value)
+      MarkLeft::ToTextile::InvalidHeaderLevelError.validate!(value)
       @header_level = value
     end
 
     def list_depth=(value)
-      Markdown::ToTextile::InvalidListDepthError.validate!(value)
+      MarkLeft::ToTextile::InvalidListDepthError.validate!(value)
       @list_depth = value
     end
   end

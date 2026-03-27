@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Markdown
+module MarkLeft
   class ToTextile
     # Converts Markdown bold syntax to Textile bold syntax.
     # Both ** and __ delimiters are supported and processed independently.

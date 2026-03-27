@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'markdown/to_textile/header'
-require 'markdown/to_textile/bold'
-require 'markdown/to_textile/unordered_list'
-require 'markdown/to_textile/ordered_list'
+require 'mark_left/to_textile/header'
+require 'mark_left/to_textile/bold'
+require 'mark_left/to_textile/unordered_list'
+require 'mark_left/to_textile/ordered_list'
 
-module Markdown
+module MarkLeft
   class ToTextile
     VALID_HEADER_LEVELS = %w[h1 h2 h3 h4 h5 h6].freeze
 

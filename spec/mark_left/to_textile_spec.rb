@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Markdown::ToTextile do
+RSpec.describe MarkLeft::ToTextile do
   subject(:converter) { described_class.new }
 
   let(:input) do
@@ -32,23 +32,23 @@ RSpec.describe Markdown::ToTextile do
   end
 
   it 'raises InvalidHeaderLevelError for an invalid header_level' do
-    expect { described_class.new(header_level: 'h7') }.to raise_error(Markdown::ToTextile::InvalidHeaderLevelError)
+    expect { described_class.new(header_level: 'h7') }.to raise_error(MarkLeft::ToTextile::InvalidHeaderLevelError)
   end
 
   it 'raises InvalidHeaderLevelError for a non-string header_level' do
-    expect { described_class.new(header_level: 3) }.to raise_error(Markdown::ToTextile::InvalidHeaderLevelError)
+    expect { described_class.new(header_level: 3) }.to raise_error(MarkLeft::ToTextile::InvalidHeaderLevelError)
   end
 
   it 'raises InvalidListDepthError for zero list_depth' do
-    expect { described_class.new(list_depth: 0) }.to raise_error(Markdown::ToTextile::InvalidListDepthError)
+    expect { described_class.new(list_depth: 0) }.to raise_error(MarkLeft::ToTextile::InvalidListDepthError)
   end
 
   it 'raises InvalidListDepthError for negative list_depth' do
-    expect { described_class.new(list_depth: -1) }.to raise_error(Markdown::ToTextile::InvalidListDepthError)
+    expect { described_class.new(list_depth: -1) }.to raise_error(MarkLeft::ToTextile::InvalidListDepthError)
   end
 
   it 'raises InvalidListDepthError for non-integer list_depth' do
-    expect { described_class.new(list_depth: 'x') }.to raise_error(Markdown::ToTextile::InvalidListDepthError)
+    expect { described_class.new(list_depth: 'x') }.to raise_error(MarkLeft::ToTextile::InvalidListDepthError)
   end
 
   it 'returns empty string for nil input' do

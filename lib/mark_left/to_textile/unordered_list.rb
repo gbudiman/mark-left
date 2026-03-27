@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Markdown
+module MarkLeft
   class ToTextile
     # Converts a Markdown unordered list item to a Textile unordered list item.
     # Nesting depth is determined by leading indentation (2 spaces per level),

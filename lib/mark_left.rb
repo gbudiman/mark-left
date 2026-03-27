@@ -2,8 +2,8 @@
 
 require 'mark_left/version'
 require 'mark_left/configuration'
-require 'mark_left/engine' if defined?(Rails)
-require 'markdown/to_textile'
+require 'mark_left/engine'
+require 'mark_left/to_textile'
 
 module MarkLeft
   class << self
@@ -19,7 +19,7 @@ module MarkLeft
 
     def to_textile(markdown:, **options)
       merged = { header_level: configuration.header_level, list_depth: configuration.list_depth }.merge(options)
-      Markdown::ToTextile.new(**merged).convert(markdown)
+      MarkLeft::ToTextile.new(**merged).convert(markdown)
     end
   end
 end

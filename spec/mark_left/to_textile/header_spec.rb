@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Markdown::ToTextile::Header do
+RSpec.describe MarkLeft::ToTextile::Header do
   it 'converts h1' do
     expect(described_class.execute('# Heading', header_level: 'h3')).to eq('h3. Heading')
   end

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Markdown::ToTextile::OrderedList do
+RSpec.describe MarkLeft::ToTextile::OrderedList do
   it 'converts a depth-1 item' do
     expect(described_class.execute('1. item')).to eq('# item')
   end

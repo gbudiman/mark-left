@@ -1,8 +1,8 @@
 # mdx-tex
 
-A Ruby gem that converts Markdown (MDX) syntax to Textile — for those of you unfortunate enough to have to maintain a legacy system that relies on Textile.
+Converts Markdown (MDX) to Textile, for those of you unfortunate enough to have to maintain a legacy system that relies on Textile.
 
-Pure Ruby with no runtime dependencies.
+Pure Ruby, no runtime dependencies.
 
 > **Note:** Currently only supports MDX -> Textile conversion. Textile -> MDX conversion is on the roadmap.
 
@@ -13,8 +13,6 @@ Add to your Gemfile:
 ```ruby
 gem 'mdx-tex'
 ```
-
-Then run:
 
 ```bash
 bundle install
@@ -31,29 +29,28 @@ gem install mdx-tex
 ```ruby
 require 'mdx_tex'
 
-# Basic conversion
 MdxTex.to_textile(markdown: '# Hello **world**')
 # => "h3. Hello *world*"
 
-# Per-call options
+# Override options per call
 MdxTex.to_textile(markdown: '# Hello', header_level: 'h1')
 # => "h1. Hello"
 
-# Global configuration
+# Or set them globally
 MdxTex.configure do |config|
   config.header_level = 'h2'
   config.list_depth = 1
 end
 
-# Per-call options override global config
+# Per-call options take precedence over global config
 MdxTex.to_textile(markdown: '- item', list_depth: 2)
 ```
 
 ### String Extension
 
-You can optionally add a `to_textile` method directly on `String`.
+Adds `to_textile` directly on `String`. Disabled by default.
 
-**Any Ruby app** — explicit require:
+**Any Ruby app:**
 
 ```ruby
 require 'mdx_tex/core_ext/string'
@@ -65,7 +62,7 @@ require 'mdx_tex/core_ext/string'
 # => "* item"
 ```
 
-**Or** enable it via configuration:
+Or load it through config:
 
 ```ruby
 MdxTex.configure do |config|
@@ -74,7 +71,7 @@ end
 MdxTex.load_string_extension!
 ```
 
-**Rails** — add to `config/initializers/mdx_tex.rb`:
+**Rails** (`config/initializers/mdx_tex.rb`):
 
 ```ruby
 MdxTex.configure do |config|
@@ -82,13 +79,13 @@ MdxTex.configure do |config|
 end
 ```
 
-The Railtie will load the extension automatically when `enable_string_extension` is `true`. Disabled by default.
+The Railtie picks this up automatically after initialization.
 
 ## Supported Syntaxes
 
 ### Headers
 
-Markdown headings (`#` through `######`) are converted to Textile headings. The `header_level` option controls the base Textile heading level (default: `h3`).
+`#` through `######` become Textile headings. `header_level` sets the base level (default: `h3`).
 
 | Markdown | header_level | Textile |
 |----------|--------------|---------|
@@ -99,11 +96,11 @@ Markdown headings (`#` through `######`) are converted to Textile headings. The 
 | `##### Title` | `h5` | `h5. Title` |
 | `###### Title` | `h6` | `h6. Title` |
 
-A space after `#` is required. `#NoSpace` will not be converted.
+Requires a space after `#`. `#NoSpace` won't convert.
 
 ### Bold
 
-Both `**text**` and `__text__` are converted to Textile bold (`*text*`).
+`**text**` and `__text__` become `*text*`. Multiple spans and mixed delimiters work on the same line.
 
 | Markdown | Textile |
 |----------|---------|
@@ -112,11 +109,9 @@ Both `**text**` and `__text__` are converted to Textile bold (`*text*`).
 | `**a** and **b**` | `*a* and *b*` |
 | `**a** and __b__` | `*a* and *b*` |
 
-Multiple bold spans and mixed delimiters on the same line are supported.
-
 ### Unordered Lists
 
-Markdown unordered lists (`- item`) are converted to Textile unordered lists. Nesting is determined by indentation (2 spaces per level), offset by the `list_depth` option (default: `3`).
+`- item` becomes Textile `* item`. Nesting uses 2-space indentation. `list_depth` controls the base asterisk count (default: `3`).
 
 | Markdown | list_depth | Textile |
 |----------|------------|---------|
@@ -127,7 +122,7 @@ Markdown unordered lists (`- item`) are converted to Textile unordered lists. Ne
 
 ### Ordered Lists
 
-Markdown ordered lists (`1. item`) are converted to Textile ordered lists. Nesting is determined by indentation (2 spaces per level). The number prefix is discarded.
+`1. item` becomes `# item`. The actual number is ignored. Nesting uses 2-space indentation.
 
 | Markdown | Textile |
 |----------|---------|
@@ -140,14 +135,14 @@ Markdown ordered lists (`1. item`) are converted to Textile ordered lists. Nesti
 
 | Option | Type | Valid Values | Default | Description |
 |--------|------|-------------|---------|-------------|
-| `header_level` | String | `h1`..`h6` | `h3` | Textile heading tag for Markdown headings |
-| `list_depth` | Integer | Positive integer | `3` | Base asterisk count for unordered list items |
+| `header_level` | String | `h1`..`h6` | `h3` | Textile heading tag |
+| `list_depth` | Integer | Positive integer | `3` | Base asterisk count for unordered lists |
 
-Invalid values raise `InvalidHeaderLevelError` or `InvalidListDepthError`.
+Bad values raise `InvalidHeaderLevelError` or `InvalidListDepthError`.
 
 ## Full Example
 
-**Input:**
+Input:
 ```markdown
 # **Title**
 
@@ -159,7 +154,7 @@ Invalid values raise `InvalidHeaderLevelError` or `InvalidListDepthError`.
 1. second
 ```
 
-**Output** (default config):
+Output (default config):
 ```textile
 h3. *Title*
 
@@ -173,34 +168,28 @@ h3. *Title*
 
 ## Development
 
-### Setup
-
 ```bash
 git clone https://github.com/gbudiman/mdx-tex.git
 cd mdx-tex
 bundle install
 ```
 
-### Git Hooks (Overcommit)
+### Git Hooks
 
-This project uses [overcommit](https://github.com/sds/overcommit) to run RuboCop as a pre-commit hook. Install the hooks after cloning:
+Uses [overcommit](https://github.com/sds/overcommit) for pre-commit RuboCop. After cloning:
 
 ```bash
 bundle exec overcommit --install
 bundle exec overcommit --sign
 ```
 
-This ensures RuboCop runs automatically on every commit.
-
-### Running Tests
+### Tests
 
 ```bash
 bundle exec rspec
-# or
-bundle exec rake
 ```
 
-### Linting
+### Lint
 
 ```bash
 bundle exec rubocop
@@ -208,19 +197,13 @@ bundle exec rubocop
 
 ## Releasing
 
-The `bin/release` script handles version bumping, tagging, and pushing. GitHub Actions publishes the gem to RubyGems.
-
 ```bash
 bin/release patch   # 0.1.10 → 0.1.11
 bin/release minor   # 0.1.10 → 0.2.0
 bin/release major   # 0.1.10 → 1.0.0
 ```
 
-The script will:
-1. Run the test suite
-2. Bump the version in `lib/mdx_tex/version.rb`
-3. Commit and tag the release
-4. Push to GitHub (triggers gem publish via GitHub Actions)
+Runs specs, bumps the version, commits, tags, and pushes. GitHub Actions handles the RubyGems publish.
 
 ## License
 

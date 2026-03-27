@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.description = 'Converts Markdown syntax to Textile syntax, with configurable header levels and list depth.'
   spec.authors     = ['Gloria Budiman']
   spec.email       = ['wahyu.g@gmail.com']
-  spec.homepage    = 'https://github.com/gbudiman/mark-left'
+  spec.homepage    = 'https://github.com/gbudiman/mdx-tex'
 
   spec.required_ruby_version = '>= 2.6'
 

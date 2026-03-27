@@ -2,6 +2,7 @@
 
 require 'mark_left/version'
 require 'mark_left/configuration'
+require 'mark_left/engine' if defined?(Rails)
 require 'markdown/to_textile'
 
 module MarkLeft

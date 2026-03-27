@@ -14,10 +14,12 @@ module MdxTex
   #   MdxTex.to_textile(markdown: markdown, list_depth: 1)
   class Configuration
     attr_reader :header_level, :list_depth
+    attr_accessor :enable_string_extension
 
     def initialize
       @header_level = 'h3'
       @list_depth = 3
+      @enable_string_extension = false
     end
 
     def header_level=(value)

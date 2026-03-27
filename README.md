@@ -47,6 +47,41 @@ end
 MdxTex.to_textile(markdown: '- item', list_depth: 2)
 ```
 
+### String Extension
+
+You can optionally add a `to_textile` method directly on `String`.
+
+**Any Ruby app** — explicit require:
+
+```ruby
+require 'mdx_tex/core_ext/string'
+
+'# Hello **world**'.to_textile
+# => "h3. Hello *world*"
+
+'- item'.to_textile(list_depth: 1)
+# => "* item"
+```
+
+**Or** enable it via configuration:
+
+```ruby
+MdxTex.configure do |config|
+  config.enable_string_extension = true
+end
+MdxTex.load_string_extension!
+```
+
+**Rails** — add to `config/initializers/mdx_tex.rb`:
+
+```ruby
+MdxTex.configure do |config|
+  config.enable_string_extension = true
+end
+```
+
+The Railtie will load the extension automatically when `enable_string_extension` is `true`. Disabled by default.
+
 ## Supported Syntaxes
 
 ### Headers

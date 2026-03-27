@@ -20,5 +20,11 @@ module MdxTex
       merged = { header_level: configuration.header_level, list_depth: configuration.list_depth }.merge(options)
       MdxTex::ToTextile.new(**merged).execute(markdown)
     end
+
+    def load_string_extension!
+      require 'mdx_tex/core_ext/string'
+    end
   end
 end
+
+require 'mdx_tex/railtie' if defined?(Rails::Railtie)

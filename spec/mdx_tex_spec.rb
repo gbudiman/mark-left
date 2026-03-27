@@ -80,5 +80,21 @@ RSpec.describe MdxTex do
     it 'raises InvalidListDepthError for a non-integer list_depth' do
       expect { config.list_depth = 'x' }.to raise_error(MdxTex::ToTextile::InvalidListDepthError)
     end
+
+    it 'defaults enable_string_extension to false' do
+      expect(config.enable_string_extension).to be(false)
+    end
+  end
+
+  describe '.load_string_extension!' do
+    before { described_class.load_string_extension! }
+
+    it 'adds #to_textile to String' do
+      expect('# Heading'.to_textile).to eq('h3. Heading')
+    end
+
+    it 'forwards options to MdxTex.to_textile' do
+      expect('# Heading'.to_textile(header_level: 'h1')).to eq('h1. Heading')
+    end
   end
 end
